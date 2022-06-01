@@ -10,8 +10,8 @@ import (
 	"syscall"
 	"testing"
 
+	"github.com/gihmm/modem/serial"
 	"github.com/stretchr/testify/require"
-	"github.com/warthog618/modem/serial"
 )
 
 func modemExists(name string) func(t *testing.T) {

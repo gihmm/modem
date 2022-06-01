@@ -9,9 +9,9 @@ import (
 	"log"
 	"testing"
 
+	"github.com/gihmm/modem/trace"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/warthog618/modem/trace"
 )
 
 func TestNew(t *testing.T) {

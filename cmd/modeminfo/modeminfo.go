@@ -17,9 +17,9 @@ import (
 	"os"
 	"time"
 
-	"github.com/warthog618/modem/at"
-	"github.com/warthog618/modem/serial"
-	"github.com/warthog618/modem/trace"
+	"github.com/gihmm/modem/at"
+	"github.com/gihmm/modem/serial"
+	"github.com/gihmm/modem/trace"
 )
 
 var version = "undefined"
