@@ -1,4 +1,4 @@
-module github.com/warthog618/modem
+module github.com/gihmm/modem
 
 require (
 	github.com/pkg/errors v0.9.1

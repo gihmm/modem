@@ -14,9 +14,9 @@ import (
 
 	"github.com/gihmm/modem/at"
 	"github.com/gihmm/modem/info"
-	"github.com/gihmm/sms"
-	"github.com/gihmm/sms/encoding/pdumode"
-	"github.com/gihmm/sms/encoding/tpdu"
+	"github.com/warthog618/sms"
+	"github.com/warthog618/sms/encoding/pdumode"
+	"github.com/warthog618/sms/encoding/tpdu"
 )
 
 // GSM modem decorates the AT modem with GSM specific functionality.

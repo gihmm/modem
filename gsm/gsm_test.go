@@ -24,14 +24,14 @@ import (
 	"github.com/gihmm/modem/at"
 	"github.com/gihmm/modem/gsm"
 	"github.com/gihmm/modem/trace"
-	"github.com/gihmm/sms"
-	"github.com/gihmm/sms/encoding/pdumode"
-	"github.com/gihmm/sms/encoding/semioctet"
-	"github.com/gihmm/sms/encoding/tpdu"
-	"github.com/gihmm/sms/encoding/ucs2"
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"github.com/warthog618/sms"
+	"github.com/warthog618/sms/encoding/pdumode"
+	"github.com/warthog618/sms/encoding/semioctet"
+	"github.com/warthog618/sms/encoding/tpdu"
+	"github.com/warthog618/sms/encoding/ucs2"
 )
 
 var debug = false // set to true to enable tracing of the flow to the mockModem.

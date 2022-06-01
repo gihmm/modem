@@ -21,7 +21,7 @@ import (
 	"github.com/gihmm/modem/info"
 	"github.com/gihmm/modem/serial"
 	"github.com/gihmm/modem/trace"
-	"github.com/gihmm/sms/encoding/gsm7"
+	"github.com/warthog618/sms/encoding/gsm7"
 )
 
 var version = "undefined"

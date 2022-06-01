@@ -20,7 +20,7 @@ import (
 	"github.com/gihmm/modem/gsm"
 	"github.com/gihmm/modem/serial"
 	"github.com/gihmm/modem/trace"
-	"github.com/gihmm/sms"
+	"github.com/warthog618/sms"
 )
 
 var version = "undefined"
