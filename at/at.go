@@ -454,7 +454,7 @@ func (a *AT) processReq(cmd string, timeout time.Duration) (info []string, err e
 				continue
 			}
 			lt := parseRxLine(line, cmdID)
-			i, done, perr := a.processRxLine(lt, line)
+			i, done, perr := a.processRxLine(lt, line, cmdID)
 			if i != nil {
 				info = append(info, *i)
 			}
@@ -522,7 +522,7 @@ func (a *AT) processSmsReq(cmd string, sms string, timeout time.Duration) (info 
 //  - a line of info to be added to the response (optional)
 //  - a flag indicating if the command is complete.
 //  - an error detected while processing the command.
-func (a *AT) processRxLine(lt rxl, line string) (info *string, done bool, err error) {
+func (a *AT) processRxLine(lt rxl, line string, cmdID string) (info *string, done bool, err error) {
 	switch lt {
 	case rxlStatusOK:
 		done = true
@@ -535,6 +535,9 @@ func (a *AT) processRxLine(lt rxl, line string) (info *string, done bool, err er
 		done = true
 	case rxlConnectError:
 		err = ConnectError(line)
+	case rxlResultWithCmdID:
+		tmp := strings.TrimPrefix(line, "AT"+cmdID+"=")
+		info = &tmp
 	}
 	return
 }
@@ -560,7 +563,7 @@ func (a *AT) processSmsRxLine(lt rxl, line string, sms string) (info *string, do
 			a.escape()
 		}
 	default:
-		return a.processRxLine(lt, line)
+		return a.processRxLine(lt, line, "")
 	}
 	return
 }
@@ -698,6 +701,7 @@ const (
 	rxlSMSPrompt
 	rxlConnect
 	rxlConnectError
+	rxlResultWithCmdID
 )
 
 // Indication represents an unsolicited result code (URC) from the modem, such
@@ -774,6 +778,8 @@ func parseRxLine(line string, cmdID string) rxl {
 		return rxlInfo
 	case line == ">":
 		return rxlSMSPrompt
+	case strings.HasPrefix(line, "AT"+cmdID) && len(line) > len("AT"+cmdID):
+		return rxlResultWithCmdID
 	case strings.HasPrefix(line, "AT"+cmdID):
 		return rxlEchoCmdLine
 	case len(cmdID) == 0 || cmdID[0] != 'D':
