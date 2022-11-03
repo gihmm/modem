@@ -528,6 +528,8 @@ func (a *AT) processRxLine(lt rxl, line string, cmdID string) (info *string, don
 		done = true
 	case rxlStatusError:
 		err = newError(line)
+	case rxlBusyError:
+		err = BusyError(line)
 	case rxlUnknown, rxlInfo:
 		info = &line
 	case rxlConnect:
@@ -633,6 +635,11 @@ type CMSError string
 // The value of the error is the failure indication returned by the modem.
 type ConnectError string
 
+// BusyError indicates an attempt to send a message failed because the modem is busy or has to wait
+//
+// The value of the error is the failure indication returned by the modem.
+type BusyError string
+
 func (e CMEError) Error() string {
 	return string("CME Error: " + e)
 }
@@ -643,6 +650,10 @@ func (e CMSError) Error() string {
 
 func (e ConnectError) Error() string {
 	return string("Connect: " + e)
+}
+
+func (e BusyError) Error() string {
+	return string("Busy: " + e)
 }
 
 var (
@@ -702,6 +713,7 @@ const (
 	rxlConnect
 	rxlConnectError
 	rxlResultWithCmdID
+	rxlBusyError
 )
 
 // Indication represents an unsolicited result code (URC) from the modem, such
@@ -794,6 +806,8 @@ func parseRxLine(line string, cmdID string) rxl {
 		line == "NO CARRIER",
 		line == "NO DIALTONE":
 		return rxlConnectError
+	case strings.HasPrefix(line, "AT_BUSY_ERROR"):
+		return rxlBusyError
 	default:
 		// No attempt to identify SMS PDUs at this level, so they will
 		// be caught here, along with other unidentified lines.
